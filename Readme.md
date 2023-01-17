@@ -10,7 +10,7 @@ Actually, you can run the app locally by following this steps. After cloning thi
 
 ```
 npm install
-npm run dev // development mode
+npm start // development mode
 ```
 
 # API reference N/A
