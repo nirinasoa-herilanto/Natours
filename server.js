@@ -1,12 +1,12 @@
+const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 dotenv.config({ path: './config.env' });
 
 const app = require('./app');
-const { port } = require('./config');
+const { port, dbLocal } = require('./config');
 
-/**
- * All about the server
- */
+mongoose.set('strictQuery', true);
+mongoose.connect(dbLocal).then(() => console.log('DB Connected'));
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
