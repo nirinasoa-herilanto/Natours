@@ -13,6 +13,22 @@ npm install
 npm start // development mode
 ```
 
+## Import/Delete dummy data
+
+Before running this commande, please make sure you are inside the project directory.
+
+- Import data to database, we can follow this command:
+
+```
+node dev-data/data/import-dev-data.js --import
+```
+
+- Delete data on database:
+
+```
+node dev-data/data/import-dev-data.js --delete
+```
+
 # API reference N/A
 
 # Deployement N/A
