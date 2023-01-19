@@ -1,10 +1,15 @@
 const Tour = require('../models/tour.model');
 
+exports.aliasTopTours = (req, res, next) => {
+  req.query.limit = '5';
+  req.query.sort = '-ratingsAverage,-price';
+  req.query.fields = 'name,ratingsAverage,price,summary,difficulty,duration';
+
+  next();
+};
+
 exports.AddNewTour = async (req, res) => {
   try {
-    // const newTour = new Tour({});
-    // newTour.save();
-
     const newTour = await Tour.create(req.body);
 
     res.status(201).json({
