@@ -1,10 +1,15 @@
 const Tour = require('../models/tour.model');
 
+exports.aliasTopTours = (req, res, next) => {
+  req.query.limit = '5';
+  req.query.sort = '-ratingsAverage,-price';
+  req.query.fields = 'name,ratingsAverage,price,summary,difficulty,duration';
+
+  next();
+};
+
 exports.AddNewTour = async (req, res) => {
   try {
-    // const newTour = new Tour({});
-    // newTour.save();
-
     const newTour = await Tour.create(req.body);
 
     res.status(201).json({
@@ -21,11 +26,58 @@ exports.AddNewTour = async (req, res) => {
 
 exports.getAllTours = async (req, res) => {
   try {
-    const tours = await Tour.find().exec();
+    // * Build query *
+    const queryObj = { ...req.query };
+    const excludeFields = ['page', 'sort', 'limit', 'fields'];
+    excludeFields.forEach((el) => delete queryObj[el]);
 
+    // # build advanced query
+    let queryStr = JSON.stringify(req.query);
+    queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (str) => `$${str}`);
+
+    let query = Tour.find(JSON.parse(queryStr));
+
+    console.log(req.query);
+
+    // # sort data
+    if (req.query.sort) {
+      const sortBy = req.query.sort.split(',').join(' ');
+      query = query.sort(sortBy);
+    } else {
+      query = query.sort('-createdAt');
+    }
+
+    // # get specific fields
+    if (req.query.fields) {
+      const fields = req.query.fields.split(',').join(' ');
+      query = query.select(fields);
+    } else {
+      query = query.select('-__v');
+    }
+
+    // # Pagination
+    const page = req.query.page * 1 || 1;
+    const limit = req.query.limit * 1 || 10;
+    const skip = (page - 1) * limit;
+
+    query = query.skip(skip).limit(limit);
+
+    // # another ways of filtering data
+    // const query = Tour.find()
+    //   .where('duration')
+    //   .equals(5)
+    //   .where('difficulty')
+    //   .equals('easy')
+    //   .exec();
+
+    // * Execute query *
+    const tours = await query.exec();
+
+    // * Send response *
     res.status(200).json({
       status: 'success',
       requestAt: req.requestTime,
+      results: tours.length,
       data: tours,
     });
   } catch (error) {
