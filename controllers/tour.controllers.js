@@ -52,6 +52,22 @@ exports.getSpecificTour = async (req, res) => {
   }
 };
 
+exports.AddNewTour = async (req, res) => {
+  try {
+    const newTour = await Tour.create(req.body);
+
+    res.status(201).json({
+      success: 'success',
+      data: { tour: newTour },
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: 'fail',
+      message: 'Invalid data input!',
+    });
+  }
+};
+
 exports.updateTour = async (req, res) => {
   try {
     const tour = await Tour.findByIdAndUpdate(req.params.id, req.body, {
