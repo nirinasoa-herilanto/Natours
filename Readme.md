@@ -29,7 +29,11 @@ node dev-data/data/import-dev-data.js --import
 node dev-data/data/import-dev-data.js --delete
 ```
 
-# API reference N/A
+# API reference
+
+During API development, I use `Postman` for handling/testing all endpoints.
+
+- Base URL endpoints: `http://127.0.0.1:8000/api/V1/` or `http://localhost:8000/api/v1/`
 
 ## Query operators
 
@@ -42,7 +46,7 @@ Natours API use four (04) operators:
 
 example:
 
-`curl http://localhost:8000/api/v1/tours?duration[gte]=5&difficulty=easy&price[gt]=1000`
+`http://localhost:8000/api/v1/tours?duration[gte]=5&difficulty=easy&price[gt]=1000`
 
 ## Sorting data
 
@@ -50,13 +54,13 @@ example:
 
   example:
 
-  `curl http://localhost:8000/api/v1/tours?sort=price`
+  `http://localhost:8000/api/v1/tours?sort=price`
 
 - Descending, by adding "`-`" sign:
 
   example:
 
-  `curl http://localhost:8000/api/v1/tours?sort=-price`
+  `http://localhost:8000/api/v1/tours?sort=-price`
 
 ## Get a specific fields
 
@@ -64,7 +68,7 @@ You could get a specific fields from data by using `fields` on our query string 
 
 example: we would only like to have the fields name and duration
 
-`curl http://localhost:8000/api/v1/tours?fields=name,duration`
+`http://localhost:8000/api/v1/tours?fields=name,duration`
 
 # Deployement N/A
 
