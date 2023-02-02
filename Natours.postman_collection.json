@@ -12,15 +12,23 @@
 				{
 					"name": "Get all the tours",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8000/api/v1/tours?duration[gte]=5&fields=name,duration&sort=-duration",
-							"protocol": "http",
+							"raw": "{{URL}}/api/v1/tours?duration=5&duration=9&sort=-price",
 							"host": [
-								"localhost"
+								"{{URL}}"
 							],
-							"port": "8000",
 							"path": [
 								"api",
 								"v1",
@@ -28,16 +36,16 @@
 							],
 							"query": [
 								{
-									"key": "duration[gte]",
+									"key": "duration",
 									"value": "5"
 								},
 								{
-									"key": "fields",
-									"value": "name,duration"
+									"key": "duration",
+									"value": "9"
 								},
 								{
 									"key": "sort",
-									"value": "-duration"
+									"value": "-price"
 								}
 							]
 						}
@@ -51,7 +59,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"price\": 500\r\n}",
+							"raw": "{\r\n    \"duration\": 6\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -59,17 +67,15 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/api/v1/tours/63c54150c35df0dbda2d38cf",
-							"protocol": "http",
+							"raw": "{{URL}}/api/v1/tours/63ce5defa57f0ebd92e9b16f",
 							"host": [
-								"localhost"
+								"{{URL}}"
 							],
-							"port": "8000",
 							"path": [
 								"api",
 								"v1",
 								"tours",
-								"63c54150c35df0dbda2d38cf"
+								"63ce5defa57f0ebd92e9b16f"
 							]
 						}
 					},
@@ -78,20 +84,28 @@
 				{
 					"name": "Delete tour",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8000/api/v1/tours/63c54150c35df0dbda2d38cf",
-							"protocol": "http",
+							"raw": "{{URL}}/api/v1/tours/63ce5defa57f0ebd92e9b16f",
 							"host": [
-								"localhost"
+								"{{URL}}"
 							],
-							"port": "8000",
 							"path": [
 								"api",
 								"v1",
 								"tours",
-								"63c54150c35df0dbda2d38cf"
+								"63ce5defa57f0ebd92e9b16f"
 							]
 						}
 					},
@@ -103,17 +117,15 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8000/api/v1/tours/63c54150c35df0dbda2d38cf",
-							"protocol": "http",
+							"raw": "{{URL}}/api/v1/tours/63c7a6ab4432f158b4bb8c3d",
 							"host": [
-								"localhost"
+								"{{URL}}"
 							],
-							"port": "8000",
 							"path": [
 								"api",
 								"v1",
 								"tours",
-								"63c54150c35df0dbda2d38cf"
+								"63c7a6ab4432f158b4bb8c3d"
 							]
 						}
 					},
@@ -134,12 +146,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/api/v1/tours",
-							"protocol": "http",
+							"raw": "{{URL}}/api/v1/tours",
 							"host": [
-								"localhost"
+								"{{URL}}"
 							],
-							"port": "8000",
 							"path": [
 								"api",
 								"v1",
@@ -155,12 +165,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8000/api/v1/tours/top-5-cheap",
-							"protocol": "http",
+							"raw": "{{URL}}/api/v1/tours/top-5-cheap",
 							"host": [
-								"localhost"
+								"{{URL}}"
 							],
-							"port": "8000",
 							"path": [
 								"api",
 								"v1",
@@ -177,12 +185,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8000/api/v1/tours/tour-stats",
-							"protocol": "http",
+							"raw": "{{URL}}/api/v1/tours/tour-stats",
 							"host": [
-								"localhost"
+								"{{URL}}"
 							],
-							"port": "8000",
 							"path": [
 								"api",
 								"v1",
@@ -199,12 +205,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8000/api/v1/tours/monthly-plans/2021",
-							"protocol": "http",
+							"raw": "{{URL}}/api/v1/tours/monthly-plans/2021",
 							"host": [
-								"localhost"
+								"{{URL}}"
 							],
-							"port": "8000",
 							"path": [
 								"api",
 								"v1",
@@ -227,18 +231,295 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "127.0.0.1:8000/api/v1/users",
+							"raw": "{{URL}}/api/v1/users",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{URL}}"
 							],
-							"port": "8000",
 							"path": [
 								"api",
 								"v1",
 								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User update profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Azerty\",\r\n    \"role\": \"admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/v1/users/update-profile",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"update-profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User delete account",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/v1/users/delete-account",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"delete-account"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "User signup",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"JWT\", pm.response.json().accessToken);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"user\",\r\n    \"email\": \"user@gmail.com\",\r\n    \"password\": \"user12345\",\r\n    \"passwordConfirm\": \"user12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/v1/users/signup",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"JWT\", pm.response.json().accessToken);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"test@gmail.com\",\r\n    \"password\": \"azerty1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/v1/users/login",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User forgot password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"test@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/v1/users/forgot-password",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"forgot-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User reset password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"JWT\", pm.response.json().accessToken);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\":\"azerty1234\",\r\n    \"passwordConfirm\":\"azerty1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/v1/users/reset-password/4c99c77815187eda1b4eab945741d92747b9d76ec7ac68efcdd2a97ac433fa15",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"reset-password",
+								"4c99c77815187eda1b4eab945741d92747b9d76ec7ac68efcdd2a97ac433fa15"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User update password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"JWT\", pm.response.json().accessToken);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"currentPassword\": \"test12345\",\r\n    \"password\": \"test12345$\",\r\n    \"passwordConfirm\":\"test12345$\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/v1/users/update-password",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"update-password"
 							]
 						}
 					},

@@ -35,6 +35,10 @@ During API development, I use `Postman` for handling/testing all endpoints.
 
 - Base URL endpoints: `http://127.0.0.1:8000/api/V1/` or `http://localhost:8000/api/v1/`
 
+## Request limit
+
+100 request per hour.
+
 ## Query operators
 
 Natours API use four (04) operators:
