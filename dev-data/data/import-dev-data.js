@@ -10,9 +10,7 @@ mongoose.set('strictQuery', true);
 mongoose.connect(dbLocal).then(() => console.log('DB Connected'));
 
 // Read data
-const tours = JSON.parse(
-  fs.readFileSync(`${__dirname}/tours-simple.json`, 'utf-8')
-);
+const tours = JSON.parse(fs.readFileSync(`${__dirname}/tours.json`, 'utf-8'));
 
 // Import data to DB
 const importData = async () => {
