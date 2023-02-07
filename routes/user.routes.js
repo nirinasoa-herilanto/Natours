@@ -8,6 +8,7 @@ const {
   resetPassword,
   updatePassword,
   protect,
+  restrictTo,
 } = require('../controllers/auth.controller');
 
 const {
@@ -18,17 +19,23 @@ const {
   deleteUser,
   updateProfile,
   deleteAccount,
+  getMe,
+  viewMyProfile,
 } = require('../controllers/user.controller');
 
 router.post('/signup', signup);
 router.post('/login', login);
-
 router.post('/forgot-password', forgotPassword);
 router.patch('/reset-password/:token', resetPassword);
-router.patch('/update-password', protect, updatePassword);
 
-router.patch('/update-profile', protect, updateProfile);
-router.delete('/delete-account', protect, deleteAccount);
+router.use(protect); // protect all routes after this middleware
+
+router.get('/profile', getMe, viewMyProfile);
+router.patch('/update-profile', updateProfile);
+router.patch('/update-password', updatePassword);
+router.delete('/delete-account', deleteAccount);
+
+router.use(restrictTo('admin')); // only for administator
 
 router.route('/').get(getAllUsers).post(addNewUser);
 router.route('/:id').get(getSpecificUser).patch(updateUser).delete(deleteUser);
