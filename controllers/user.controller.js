@@ -1,7 +1,7 @@
 const User = require('../models/user.model');
-const APIFeatures = require('../utils/apiFeatures.utils');
 const AppError = require('../utils/appError.utils');
 const catchAsync = require('../utils/catchAsync.util');
+const factory = require('./handle.factory');
 
 /**
  * Use to filter data input (req.body)
@@ -19,17 +19,10 @@ const filterDataInput = (obj, ...allowFields) => {
   return newObj;
 };
 
-exports.getAllUsers = catchAsync(async (req, res) => {
-  const features = new APIFeatures(User, req.query).filter();
-
-  const users = await features.query.exec();
-
-  res.status(200).json({
-    status: 'success',
-    results: users.length,
-    data: { users },
-  });
-});
+exports.getMe = (req, res, next) => {
+  req.params.id = req.user.id;
+  next();
+};
 
 /**
  * Use to update user profile(me)
@@ -48,7 +41,7 @@ exports.updateProfile = catchAsync(async (req, res, next) => {
   }
 
   // Filter data input that no allowed to updated
-  const inputData = filterDataInput(req.body, 'name', 'email');
+  const inputData = filterDataInput(req.body, 'name');
 
   const userUpdated = await User.findByIdAndUpdate(req.user.id, inputData, {
     new: true,
@@ -73,30 +66,15 @@ exports.deleteAccount = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.getSpecificUser = (req, res) => {
-  res.status(500).json({
-    status: 'error',
-    message: 'This route was not implemented yet.',
-  });
-};
-
 exports.addNewUser = (req, res) => {
   res.status(500).json({
     status: 'error',
-    message: 'This route was not implemented yet.',
+    message: 'This route was not implemented yet. Please use signup instead!',
   });
 };
 
-exports.updateUser = (req, res) => {
-  res.status(500).json({
-    status: 'error',
-    message: 'This route was not implemented yet.',
-  });
-};
-
-exports.deleteUser = (req, res) => {
-  res.status(500).json({
-    status: 'error',
-    message: 'This route was not implemented yet.',
-  });
-};
+exports.getAllUsers = factory.getAll(User);
+exports.viewMyProfile = factory.getOne(User);
+exports.getSpecificUser = factory.getOne(User);
+exports.updateUser = factory.updateOne(User); // do not update password
+exports.deleteUser = factory.deleteOne(User);

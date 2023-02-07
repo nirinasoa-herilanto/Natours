@@ -1,6 +1,6 @@
 class APIFeatures {
   /**
-   * Advanced query API.
+   * Advanced query API. Based on "req.query"
    * @param {Model} query Mongoose model
    * @param {Request.query} queryString request query parameters
    */

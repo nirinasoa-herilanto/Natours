@@ -12,19 +12,28 @@ const {
 
 const { protect, restrictTo } = require('../controllers/auth.controller');
 
+const reviewRouter = require('./review.routes');
+
 const router = express.Router();
+
+router.use('/:tourId/reviews', reviewRouter); // allow to use nested routes
 
 // Aliasing
 router.route('/top-5-cheap').get(aliasTopTours, getAllTours);
-
 router.route('/tour-stats').get(getTourStats);
-router.route('/monthly-plans/:year').get(getMonthlyPlan);
+router
+  .route('/monthly-plans/:year')
+  .get(protect, restrictTo('admin', 'lead-guide', 'guide'), getMonthlyPlan);
 
-router.route('/').get(protect, getAllTours).post(AddNewTour);
+router
+  .route('/')
+  .get(getAllTours)
+  .post(protect, restrictTo('admin', 'lead-guide'), AddNewTour);
+
 router
   .route('/:id')
   .get(getSpecificTour)
-  .patch(updateTour)
+  .patch(protect, restrictTo('admin', 'lead-guide'), updateTour)
   .delete(protect, restrictTo('admin', 'lead-guide'), deleteTour);
 
 module.exports = router;
