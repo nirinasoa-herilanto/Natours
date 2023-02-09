@@ -16,6 +16,12 @@ npm start // development mode
 ## Import/Delete dummy data
 
 Before running this commande, please make sure you are inside the project directory.
+Please comment `line 55 - line 73` in user model in order to disable a new encryption password, then
+you can uncomment it after.
+
+```
+All users passwords are "test1234" in dev-data
+```
 
 - Import data to database, we can follow this command:
 
