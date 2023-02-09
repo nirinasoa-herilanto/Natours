@@ -1,6 +1,6 @@
 const express = require('express');
+const Review = require('../models/review.model');
 const { protect, restrictTo } = require('../controllers/auth.controller');
-
 const {
   getSpecificReview,
   getAllReviews,
@@ -9,6 +9,7 @@ const {
   updateReview,
   setTourUserId,
 } = require('../controllers/review.controller');
+const { checkUser } = require('../controllers/handle.factory');
 
 const router = express.Router({ mergeParams: true });
 
@@ -22,7 +23,7 @@ router
 router
   .route('/:id')
   .get(getSpecificReview)
-  .patch(restrictTo('user', 'admin'), updateReview)
-  .delete(restrictTo('user', 'admin'), deleteReview);
+  .patch(restrictTo('user', 'admin'), checkUser(Review, 'user'), updateReview)
+  .delete(restrictTo('user', 'admin'), checkUser(Review, 'user'), deleteReview);
 
 module.exports = router;

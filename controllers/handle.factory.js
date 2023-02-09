@@ -3,6 +3,30 @@ const AppError = require('../utils/appError.utils');
 const APIFeatures = require('../utils/apiFeatures.utils');
 
 /**
+ * Use to check user, if this post his your own when updating or deleting
+ * @param {Model} Model Collection name
+ * @param {string} role user role
+ */
+exports.checkUser = (Model, role) =>
+  catchAsync(async (req, res, next) => {
+    const doc = await Model.findById(req.params.id).exec();
+
+    if (!doc) {
+      return next(new AppError(`Document not found with that ID!`, 404));
+    }
+
+    if (req.user.role === role) {
+      if (req.user.id.toString() !== doc.user._id.toString()) {
+        return next(
+          new AppError('You are not allowed to perform this operation!', 403)
+        );
+      }
+    }
+
+    next();
+  });
+
+/**
  * Use to get all documents on database
  * @param {Model} Model Collections name
  * @returns Get All Middleware Function
