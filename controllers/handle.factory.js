@@ -20,6 +20,7 @@ exports.getAll = (Model) =>
       .paginate();
 
     // * Execute query *
+    // const docs = await features.query.explain().exec();
     const docs = await features.query.exec();
 
     // * Send response *
