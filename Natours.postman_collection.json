@@ -2,6 +2,7 @@
 	"info": {
 		"_postman_id": "5654654f-74b8-4114-ac11-008343a704e0",
 		"name": "Natours",
+		"description": "Welcome to Natours API, an project of learning Node.JS, Express, MongoDB, RESTfull API, ...",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "17022828"
 	},
@@ -10,114 +11,12 @@
 			"name": "Tours",
 			"item": [
 				{
-					"name": "Get all the tours",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{JWT}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{URL}}/api/v1/tours?duration=5&duration=9&sort=-price",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"tours"
-							],
-							"query": [
-								{
-									"key": "duration",
-									"value": "5"
-								},
-								{
-									"key": "duration",
-									"value": "9"
-								},
-								{
-									"key": "sort",
-									"value": "-price"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update tour",
-					"request": {
-						"method": "PATCH",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"duration\": 6\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{URL}}/api/v1/tours/63ce5defa57f0ebd92e9b16f",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"tours",
-								"63ce5defa57f0ebd92e9b16f"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete tour",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{JWT}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{URL}}/api/v1/tours/63ce5defa57f0ebd92e9b16f",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"tours",
-								"63ce5defa57f0ebd92e9b16f"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "View specific tour",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{URL}}/api/v1/tours/63c7a6ab4432f158b4bb8c3d",
+							"raw": "{{URL}}/api/v1/tours/5c88fa8cf4afda39709c2951",
 							"host": [
 								"{{URL}}"
 							],
@@ -125,26 +24,21 @@
 								"api",
 								"v1",
 								"tours",
-								"63c7a6ab4432f158b4bb8c3d"
+								"5c88fa8cf4afda39709c2951"
 							]
-						}
+						},
+						"description": "Use to view a specific tour by providing the \\*id\\*of the tour."
 					},
 					"response": []
 				},
 				{
-					"name": "Add new tour",
+					"name": "Get all the tours",
 					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "  {\r\n    \"name\": \"The Forest Hiker\",\r\n    \"duration\": 5,\r\n    \"maxGroupSize\": 25,\r\n    \"difficulty\": \"easy\",\r\n    \"ratingsAverage\": 4.7,\r\n    \"ratingsQuantity\": 37,\r\n    \"price\": 397,\r\n    \"summary\": \"Breathtaking hike through the Canadian Banff National Park\",\r\n    \"description\": \"Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.\\nLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\",\r\n    \"imageCover\": \"tour-1-cover.jpg\",\r\n    \"images\": [\"tour-1-1.jpg\", \"tour-1-2.jpg\", \"tour-1-3.jpg\"],\r\n    \"startDates\": [\"2021-04-25,10:00\", \"2021-07-20,10:00\", \"2021-10-05,10:00\"]\r\n  }",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+						"auth": {
+							"type": "noauth"
 						},
+						"method": "GET",
+						"header": [],
 						"url": {
 							"raw": "{{URL}}/api/v1/tours",
 							"host": [
@@ -155,7 +49,8 @@
 								"v1",
 								"tours"
 							]
-						}
+						},
+						"description": "Use to view all tours availables. You can use query parameters.\n\nStartFragment\n\n- $gt: greater than to a value specified\n- $gte: greater than or equal to a value specified\n- $lt: less than to a value specified\n- $lte: less than or equal to a value specified\n    \n\nEndFragmentex\n\nexample:\n\n\\*{{URL}}/api/v1/tours?duration\\[gte\\]=5&difficulty=easy&price\\[gt\\]=1000\\*\n\nEndF\\*"
 					},
 					"response": []
 				},
@@ -175,7 +70,8 @@
 								"tours",
 								"top-5-cheap"
 							]
-						}
+						},
+						"description": "Use to view all to five (05) cheap tours."
 					},
 					"response": []
 				},
@@ -195,13 +91,24 @@
 								"tours",
 								"tour-stats"
 							]
-						}
+						},
+						"description": "Use to view \\*statics\\* about all tours by \\*diffilculty\\*."
 					},
 					"response": []
 				},
 				{
 					"name": "Get Monthly Plans",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -216,11 +123,171 @@
 								"monthly-plans",
 								"2021"
 							]
+						},
+						"description": "Use to view a statistic about all tour each month in One year specified by providing the year.\n\nOnly \\*ADMIN\\*, \\*LEAD-GUIDE\\*, \\*GUIDE\\* can do this request."
+					},
+					"response": []
+				},
+				{
+					"name": "Add new tour",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "  {\r\n    \"name\": \"Beauty landing park\",\r\n    \"duration\": 5,\r\n    \"maxGroupSize\": 25,\r\n    \"difficulty\": \"easy\",\r\n    \"ratingsAverage\": 4.7,\r\n    \"ratingsQuantity\": 37,\r\n    \"price\": 397,\r\n    \"summary\": \"Breathtaking hike through the Canadian Banff National Park\",\r\n    \"description\": \"Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.\\nLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\",\r\n    \"imageCover\": \"tour-1-cover.jpg\",\r\n    \"images\": [\"tour-1-1.jpg\", \"tour-1-2.jpg\", \"tour-1-3.jpg\"],\r\n    \"startDates\": [\"2021-04-25,10:00\", \"2021-07-20,10:00\", \"2021-10-05,10:00\"],\r\n    \"startLocation\": {\r\n                \"type\": \"Point\",\r\n                \"coordinates\": [\r\n                    -73.985141,\r\n                    40.75894\r\n                ],\r\n                \"address\": \"Manhattan, NY 10036, USA\",\r\n                \"description\": \"NYC, USA\"\r\n            },\r\n    \"guides\": [\r\n        \"5c8a1f292f8fb814b56fa184\"\r\n    ]\r\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/v1/tours",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"tours"
+							]
+						},
+						"description": "Use to add new tour.\n\nOnly \\*ADMIN\\* and \\*LEAD-GUIDE\\* can do the request."
+					},
+					"response": []
+				},
+				{
+					"name": "Update tour",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"duration\": 10\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/v1/tours/63e5f70e9d278321cc485e44",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"tours",
+								"63e5f70e9d278321cc485e44"
+							]
+						},
+						"description": "Use to update a specfic tour.\n\nStartFragment\n\nOnly \\*ADMIN\\* and \\*LEAD-GUIDE\\* can do the request.\n\nEndFragm"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete tour",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/v1/tours/63e5f70e9d278321cc485e44",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"tours",
+								"63e5f70e9d278321cc485e44"
+							]
+						},
+						"description": "Use to delete a specific tour by id.\n\nOnly \\*ADMIN\\*, \\*LEAD-GUIDE\\* can do the operation."
+					},
+					"response": []
+				},
+				{
+					"name": "Get tour within radius",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/v1/tours/tours-within/200/center/33.851118,-118.143038/unit/ml",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"tours",
+								"tours-within",
+								"200",
+								"center",
+								"33.851118,-118.143038",
+								"unit",
+								"ml"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get tour distance",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/v1/tours/distances/33.851118,-118.143038/unit/ml",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"tours",
+								"distances",
+								"33.851118,-118.143038",
+								"unit",
+								"ml"
+							]
 						}
 					},
 					"response": []
 				}
-			]
+			],
+			"description": "Use handle all about Tour data. You could perform with CRUD operation."
 		},
 		{
 			"name": "Users",
@@ -228,6 +295,16 @@
 				{
 					"name": "View all users",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -240,7 +317,39 @@
 								"v1",
 								"users"
 							]
-						}
+						},
+						"description": "Use to view all users on the **Natours app**. Only for \\*ADMIN\\* can do this request."
+					},
+					"response": []
+				},
+				{
+					"name": "View Profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/v1/users/profile",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"profile"
+							]
+						},
+						"description": "Use to view the profile of current user connected."
 					},
 					"response": []
 				},
@@ -261,7 +370,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Azerty\",\r\n    \"role\": \"admin\"\r\n}",
+							"raw": "{\r\n    \"name\": \"Nirinasoa Herilanto\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -279,12 +388,53 @@
 								"users",
 								"update-profile"
 							]
-						}
+						},
+						"description": "Use to update the profile of the current user connected on the app."
 					},
 					"response": []
 				},
 				{
-					"name": "User delete account",
+					"name": "Update User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Nirinasoa Herilanto\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/v1/users/63d7adcf9de5bfbdecc44efd",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"63d7adcf9de5bfbdecc44efd"
+							]
+						},
+						"description": "Use to update user profile. Only the \\*ADMIN\\* have the access to perform this operation."
+					},
+					"response": []
+				},
+				{
+					"name": "Current User disable account",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -312,8 +462,39 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Admin Delete user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/v1/users/63db61baaf479a3097c83b81",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"63db61baaf479a3097c83b81"
+							]
+						}
+					},
+					"response": []
 				}
-			]
+			],
+			"description": "All about users information."
 		},
 		{
 			"name": "Authentication",
@@ -336,7 +517,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"user\",\r\n    \"email\": \"user@gmail.com\",\r\n    \"password\": \"user12345\",\r\n    \"passwordConfirm\": \"user12345\"\r\n}",
+							"raw": "{\r\n    \"name\": \"user\",\r\n    \"email\": \"user@example.com\",\r\n    \"password\": \"{{password}}\",\r\n    \"passwordConfirm\": \"{{password}}\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -354,7 +535,8 @@
 								"users",
 								"signup"
 							]
-						}
+						},
+						"description": "Example of user signup on the app.\n\nThe user must provide his name, email, password and password confirm in order to signup on the app."
 					},
 					"response": []
 				},
@@ -383,7 +565,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"test@gmail.com\",\r\n    \"password\": \"azerty1234\"\r\n}",
+							"raw": "{\r\n    \"email\": \"user@example.com\",\r\n    \"password\": \"{{password}}\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -401,7 +583,8 @@
 								"users",
 								"login"
 							]
-						}
+						},
+						"description": "Users can connect on the app with this endpoints using their email and password."
 					},
 					"response": []
 				},
@@ -412,7 +595,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"test@gmail.com\"\r\n}",
+							"raw": "{\r\n    \"email\": \"user@example.com\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -430,7 +613,8 @@
 								"users",
 								"forgot-password"
 							]
-						}
+						},
+						"description": "Use to handle user forgot password."
 					},
 					"response": []
 				},
@@ -452,7 +636,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"password\":\"azerty1234\",\r\n    \"passwordConfirm\":\"azerty1234\"\r\n}",
+							"raw": "{\r\n    \"password\":\"test1234\",\r\n    \"passwordConfirm\":\"test1234\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -460,7 +644,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{URL}}/api/v1/users/reset-password/4c99c77815187eda1b4eab945741d92747b9d76ec7ac68efcdd2a97ac433fa15",
+							"raw": "{{URL}}/api/v1/users/reset-password/11874c995473e36ed1a37eff9db91da69554da8ca6491a7e47ab52b1bedd633b",
 							"host": [
 								"{{URL}}"
 							],
@@ -469,9 +653,10 @@
 								"v1",
 								"users",
 								"reset-password",
-								"4c99c77815187eda1b4eab945741d92747b9d76ec7ac68efcdd2a97ac433fa15"
+								"11874c995473e36ed1a37eff9db91da69554da8ca6491a7e47ab52b1bedd633b"
 							]
-						}
+						},
+						"description": "Use to reset password. This endpoint was provided by the email prodived by the Natours app to the user."
 					},
 					"response": []
 				},
@@ -521,11 +706,279 @@
 								"users",
 								"update-password"
 							]
-						}
+						},
+						"description": "Use to update password of the current user."
 					},
 					"response": []
 				}
-			]
+			],
+			"description": "Use to handle about user authentication"
+		},
+		{
+			"name": "Review",
+			"item": [
+				{
+					"name": "View Specific Review",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/v1/reviews/63e12d98ec565c7092825dcb",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"reviews",
+								"63e12d98ec565c7092825dcb"
+							]
+						},
+						"description": "Use to view a specific review."
+					},
+					"response": []
+				},
+				{
+					"name": "Get all Review",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/v1/reviews",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"reviews"
+							]
+						},
+						"description": "Use view all reviews available."
+					},
+					"response": []
+				},
+				{
+					"name": "Add new Review",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"review\": \"Amazing tour :)\",\r\n    \"rating\": 5,\r\n    \"tour\": \"5c88fa8cf4afda39709c2951\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/v1/reviews",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"reviews"
+							]
+						},
+						"description": "Use to post a new review on specific tour.\n\nOnly \\*USER\\* can send the request."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Review",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"rating\": 3.9\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/v1/reviews/63e5fa109d278321cc485e55",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"reviews",
+								"63e5fa109d278321cc485e55"
+							]
+						},
+						"description": "Use to update review posted by the user who as posted this review.  \nA part this simple user, only the \\*ADMIN\\* can perform this operation."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Review",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/v1/reviews/63e5fa109d278321cc485e55",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"reviews",
+								"63e5fa109d278321cc485e55"
+							]
+						},
+						"description": "Use to delte a review posted by the user who as posted this review.  \nA part this simple user, only the \\*ADMIN\\* can perform this operation."
+					},
+					"response": []
+				}
+			],
+			"description": "All about review"
+		},
+		{
+			"name": "Nested routes on Review",
+			"item": [
+				{
+					"name": "View all review by Tour",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/v1/tours/5c88fa8cf4afda39709c2955/reviews?sort=-createdAt&rating[gt]=4",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"tours",
+								"5c88fa8cf4afda39709c2955",
+								"reviews"
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": "-createdAt"
+								},
+								{
+									"key": "rating[gt]",
+									"value": "4"
+								}
+							]
+						},
+						"description": "Use to view all review according to the tour."
+					},
+					"response": []
+				},
+				{
+					"name": "Add new Review by Tour",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"review\": \"Mind blowing!!!\",\r\n    \"rating\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/v1/tours/5c88fa8cf4afda39709c2951/reviews",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"tours",
+								"5c88fa8cf4afda39709c2951",
+								"reviews"
+							]
+						},
+						"description": "Another ways of posting review."
+					},
+					"response": []
+				}
+			],
+			"description": "All about nested routes"
 		}
 	]
 }
