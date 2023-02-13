@@ -3,6 +3,7 @@ const morgan = require('morgan');
 const helmet = require('helmet');
 const xss = require('xss-clean');
 const hpp = require('hpp');
+const path = require('path');
 const mongoSanitize = require('express-mongo-sanitize');
 const rateLimit = require('express-rate-limit');
 const tourRouter = require('./routes/tour.routes');
@@ -15,6 +16,10 @@ const globalErrorHandler = require('./controllers/error.controller');
  * Natours application
  */
 const app = express();
+app.set('view engine', 'pug');
+app.set('views', path.join(__dirname, 'views'));
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(helmet()); // set security HTTP headers
 
@@ -57,6 +62,10 @@ app.use((req, res, next) => {
 });
 
 // ----- Routes -----
+app.get('/', (req, res) => {
+  res.status(200).render('base');
+});
+
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/reviews', reviewRouter);
