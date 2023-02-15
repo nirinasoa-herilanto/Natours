@@ -64,6 +64,12 @@ exports.login = catchAsync(async (req, res, next) => {
   createAuthResponse(res, 200, user);
 });
 
+exports.logout = (req, res) => {
+  res.clearCookie('jwt');
+
+  res.status(200).json({ status: 'success' });
+};
+
 /**
  * Protected middleware
  */
@@ -76,6 +82,8 @@ exports.protect = catchAsync(async (req, res, next) => {
     req.headers.authorization.startsWith('Bearer')
   ) {
     token = req.headers.authorization.split(' ')[1];
+  } else if (req.cookies.jwt) {
+    token = req.cookies.jwt;
   }
 
   if (!token) {
@@ -104,8 +112,44 @@ exports.protect = catchAsync(async (req, res, next) => {
   }
 
   req.user = currentUser; // grant access to protected route (ex: {role:'admin'})
+  res.locals.user = currentUser;
   next();
 });
+
+/**
+ * Only use to manage render page.
+ */
+exports.isLoggedIn = async (req, res, next) => {
+  if (req.cookies.jwt) {
+    try {
+      // 2- Verify accessToken (valid/expires)
+      const decoded = await promisify(jwt.verify)(
+        req.cookies.jwt,
+        jwtSecretKey
+      );
+
+      // 3- Verirify the user
+      const currentUser = await User.findById(decoded.id).exec();
+
+      if (!currentUser) {
+        return next();
+      }
+
+      // 4- Check if the currentUser changed pw after the token was issued(created)
+      if (currentUser.changePasswordAfter(decoded.iat)) {
+        return next();
+      }
+
+      // user is connected
+      res.locals.user = currentUser; // send back to a template "user"
+      return next();
+    } catch (error) {
+      return next();
+    }
+  }
+
+  next();
+};
 
 /**
  * Use to check user role
