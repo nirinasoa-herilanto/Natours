@@ -32,12 +32,21 @@ const handleJWTExpireError = () =>
 /**
  * Use to send development error
  */
-const sendDevError = (err, res) => {
-  res.status(err.statusCode).json({
-    status: err.status,
-    message: err.message,
-    error: err,
-    stackTrace: err.stack,
+const sendDevError = (err, req, res) => {
+  if (req.originalUrl.startsWith('/api')) {
+    return res.status(err.statusCode).json({
+      status: err.status,
+      message: err.message,
+      error: err,
+      stackTrace: err.stack,
+    });
+  }
+
+  console.error('* ERROR MSG *', err);
+
+  return res.status(err.statusCode).render('error', {
+    title: 'Something went wrong!',
+    msg: err.message,
   });
 };
 
@@ -45,24 +54,41 @@ const sendDevError = (err, res) => {
  * - Use to send operationnal error.
  * - Handling error on UI (isOperational)
  */
-const sendOpError = (err, res) => {
-  // console.log('OP Error *', err);
+const sendOpError = (err, req, res) => {
+  if (req.originalUrl.startsWith('/api')) {
+    if (err.isOperational) {
+      // Send error message to client
+      return res.status(err.statusCode).json({
+        status: err.status,
+        message: err.message,
+      });
+    }
 
-  if (err.isOperational) {
-    // Send error message to client
-    res.status(err.statusCode).json({
-      status: err.status,
-      message: err.message,
-    });
-  } else {
     console.error('* ERROR MSG *', err);
 
     // Due to programming or uncknown error
-    res.status(500).json({
+    return res.status(500).json({
       status: 'fail',
       message: 'Something went wrong. Please try again!',
     });
   }
+
+  // Error render page
+  if (err.isOperational) {
+    // Send error message to client
+    return res.status(err.statusCode).render('error', {
+      title: 'Something went wrong!',
+      msg: err.message,
+    });
+  }
+
+  console.error('* ERROR MSG *', err);
+
+  // Due to programming or uncknown error
+  return res.status(500).render('error', {
+    title: 'Something went wrong!',
+    msg: 'Please try again later!',
+  });
 };
 
 /**
@@ -73,7 +99,7 @@ module.exports = (err, req, res, next) => {
   err.status ||= 'error';
 
   if (process.env.NODE_ENV === 'development') {
-    sendDevError(err, res);
+    sendDevError(err, req, res);
   } else if (process.env.NODE_ENV === 'production') {
     // use to reformate error
     let error = Object.create(err);
@@ -85,6 +111,6 @@ module.exports = (err, req, res, next) => {
     if (error.name === 'JsonWebTokenError') error = handleJWTError();
     if (error.name === 'TokenExpiredError') error = handleJWTExpireError();
 
-    sendOpError(error, res);
+    sendOpError(error, req, res);
   }
 };
