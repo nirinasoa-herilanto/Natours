@@ -65,6 +65,15 @@ exports.login = catchAsync(async (req, res, next) => {
 });
 
 /**
+ * use to log out
+ */
+exports.logout = (req, res) => {
+  res.clearCookie('jwt');
+
+  res.status(200).json({ status: 'success' });
+};
+
+/**
  * Protected middleware
  */
 exports.protect = catchAsync(async (req, res, next) => {
