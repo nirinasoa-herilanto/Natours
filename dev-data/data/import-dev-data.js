@@ -3,13 +3,13 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 dotenv.config({ path: './config.env' });
 
-const { port, dbLocal } = require('../../config');
+const { dbUrl } = require('../../config');
 const Tour = require('../../models/tour.model');
 const User = require('../../models/user.model');
 const Review = require('../../models/review.model');
 
 mongoose.set('strictQuery', true);
-mongoose.connect(dbLocal).then(() => console.log('DB Connected'));
+mongoose.connect(dbUrl).then(() => console.log('DB Connected'));
 
 // Read data
 const tours = JSON.parse(fs.readFileSync(`${__dirname}/tours.json`, 'utf-8'));

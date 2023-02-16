@@ -1,4 +1,5 @@
 const express = require('express');
+
 const router = express.Router();
 
 const {
@@ -22,6 +23,8 @@ const {
   deleteAccount,
   getMe,
   viewMyProfile,
+  uploadPhoto,
+  resizeUserPhoto,
 } = require('../controllers/user.controller');
 
 router.post('/signup', signup);
@@ -33,7 +36,7 @@ router.patch('/reset-password/:token', resetPassword);
 router.use(protect); // protect all routes after this middleware
 
 router.get('/profile', getMe, viewMyProfile);
-router.patch('/update-profile', updateProfile);
+router.patch('/update-profile', uploadPhoto, resizeUserPhoto, updateProfile);
 router.patch('/update-password', updatePassword);
 router.delete('/delete-account', deleteAccount);
 

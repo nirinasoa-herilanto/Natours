@@ -6,7 +6,7 @@ const catchAsync = require('../utils/catchAsync.util');
 const generateJWTToken = require('../utils/generateJWTToken.util');
 const jwt = require('jsonwebtoken');
 const { jwtSecretKey, jwtCookieExpire } = require('../config');
-const sendEmail = require('../utils/email.util');
+const Email = require('../utils/email.util');
 
 /**
  * Use create auth response
@@ -14,7 +14,7 @@ const sendEmail = require('../utils/email.util');
  * @param {number} statusCode  status code
  * @param {User} user User response
  */
-const createAuthResponse = (res, statusCode, user) => {
+const createAuthResponse = (req, res, statusCode, user) => {
   const token = generateJWTToken(user._id);
 
   const cookieOptions = {
@@ -22,7 +22,8 @@ const createAuthResponse = (res, statusCode, user) => {
     httpOnly: true,
   };
 
-  if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
+  if (req.secure || req.headers['x-forwarded-proto'] === 'https')
+    cookieOptions.secure = true;
 
   res.cookie('jwt', token, cookieOptions);
 
@@ -45,7 +46,11 @@ exports.signup = catchAsync(async (req, res, next) => {
     passwordConfirm: req.body.passwordConfirm,
   });
 
-  createAuthResponse(res, 201, user);
+  const url = `${req.protocol}://${req.get('host')}/profile`;
+
+  await new Email(user, url).sendWelcome();
+
+  createAuthResponse(req, res, 201, user);
 });
 
 exports.login = catchAsync(async (req, res, next) => {
@@ -61,9 +66,45 @@ exports.login = catchAsync(async (req, res, next) => {
     return next(new AppError('Incorrect email or password!', 401));
   }
 
-  createAuthResponse(res, 200, user);
+  createAuthResponse(req, res, 200, user);
 });
 
+exports.logout = (req, res) => {
+  res.clearCookie('jwt');
+
+  res.status(200).json({ status: 'success' });
+};
+
+/**
+ * use to log out
+ */
+exports.logout = (req, res) => {
+  res.clearCookie('jwt');
+
+  res.status(200).json({ status: 'success' });
+};
+
+/**
+ * use to log out
+ */
+exports.logout = (req, res) => {
+  res.clearCookie('jwt');
+
+  res.status(200).json({ status: 'success' });
+};
+
+/**
+ * use to log out
+ */
+exports.logout = (req, res) => {
+  res.clearCookie('jwt');
+
+  res.status(200).json({ status: 'success' });
+};
+
+/**
+ * use to log out
+ */
 exports.logout = (req, res) => {
   res.clearCookie('jwt');
 
@@ -180,21 +221,13 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   const resetToken = user.createResetPasswordToken();
   await user.save({ validateBeforeSave: false });
 
-  // send email to user
-  const resetEmail = `${req.protocol}://${req.get(
-    'host'
-  )}/api/v1/users/reset-password/${resetToken}`;
-
-  const message = `Forgot your password?
-  Submit a PATCH request with your new password and confirm password to ${resetEmail}.
-  If you didn't forget your password. Please ignore this email.`;
-
   try {
-    await sendEmail({
-      email: user.email,
-      subject: 'Your password reset token. (valid for 10 minutes)',
-      message,
-    });
+    // send email to user
+    const resetEmail = `${req.protocol}://${req.get(
+      'host'
+    )}/api/v1/users/reset-password/${resetToken}`;
+
+    await new Email(user, resetEmail).sendPasswordReset();
 
     res.status(200).json({
       status: 'success',
@@ -239,7 +272,7 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
   await user.save();
 
   // 3- log the user in, send JWT(accessToken)
-  createAuthResponse(res, 200, user);
+  createAuthResponse(req, res, 200, user);
 });
 
 /**
@@ -261,5 +294,5 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   await user.save();
 
   // Send access token
-  createAuthResponse(res, 200, user);
+  createAuthResponse(req, res, 200, user);
 });

@@ -1,6 +1,8 @@
-import '@babel/polyfill';
-import { login, logout } from './auth';
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
+import { authHandler, logout } from './auth';
 import { displayMap } from './mapbox';
+import { bookTour } from './stripe';
 import { updateProfile } from './updateSettings';
 
 const emailInput = document.getElementById('email');
@@ -10,13 +12,16 @@ const currentPasswordInput = document.getElementById('password-current');
 const passwordConfirm = document.getElementById('password-confirm');
 
 const loginForm = document.querySelector('.form--login');
+const signupForm = document.querySelector('.form--signup');
 const updateUserForm = document.querySelector('.form-user-data');
 const updatePasswordForm = document.querySelector('.form-user-password');
+const bookTourBtn = document.getElementById('book-tour');
 
 const map = document.getElementById('map');
 const logoutBtn = document.querySelector('.nav__el--logout');
 const saveBtnPassword = document.querySelector('.btn--save-password');
 const saveBtnProfile = document.querySelector('.btn--save-profile');
+const uploadForm = document.querySelector('.form__upload');
 
 if (map) {
   const locations = JSON.parse(map.dataset.locations);
@@ -27,7 +32,23 @@ if (loginForm)
   loginForm.addEventListener('submit', (e) => {
     e.preventDefault();
 
-    login(emailInput.value, passwordInput.value);
+    const data = { email: emailInput.value, password: passwordInput.value };
+
+    authHandler(data, 'login');
+  });
+
+if (signupForm)
+  signupForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const data = {
+      name: usernameInput.value,
+      email: emailInput.value,
+      password: passwordInput.value,
+      passwordConfirm: passwordConfirm.value,
+    };
+
+    authHandler(data, 'signup');
   });
 
 if (logoutBtn) logoutBtn.addEventListener('click', logout);
@@ -38,7 +59,10 @@ if (updateUserForm)
 
     saveBtnProfile.textContent = 'Updating ...';
 
-    const data = { name: usernameInput.value };
+    const data = {
+      name: usernameInput.value,
+      ...(uploadForm.files[0] && { photo: uploadForm.files[0] }),
+    };
 
     await updateProfile(data, 'Profile');
 
@@ -64,4 +88,12 @@ if (updatePasswordForm)
     passwordInput.value = '';
     passwordConfirm.value = '';
     currentPasswordInput.value = '';
+  });
+
+if (bookTourBtn)
+  bookTourBtn.addEventListener('click', async (e) => {
+    e.target.textContent = 'Processing ...';
+
+    const { tourId } = e.target.dataset;
+    await bookTour(tourId);
   });
