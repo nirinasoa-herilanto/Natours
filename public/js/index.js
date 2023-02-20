@@ -17,6 +17,7 @@ const map = document.getElementById('map');
 const logoutBtn = document.querySelector('.nav__el--logout');
 const saveBtnPassword = document.querySelector('.btn--save-password');
 const saveBtnProfile = document.querySelector('.btn--save-profile');
+const uploadForm = document.querySelector('.form__upload');
 
 if (map) {
   const locations = JSON.parse(map.dataset.locations);
@@ -38,7 +39,20 @@ if (updateUserForm)
 
     saveBtnProfile.textContent = 'Updating ...';
 
-    const data = { name: usernameInput.value };
+    const form = new FormData()
+    form.append('photo', uploadForm.files[0])
+
+    // doesn't work
+    // const data = {
+    //   name: usernameInput.value,
+    //   ...(uploadForm.files[0] && { form }),
+    // };
+
+    // req.file is alwais undefined
+    const data = {
+      name: usernameInput.value,
+      ...(uploadForm.files[0] && { photo: uploadForm.files[0] }),
+    };
 
     await updateProfile(data, 'Profile');
 

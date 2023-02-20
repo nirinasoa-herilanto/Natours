@@ -573,6 +573,7 @@ const map = document.getElementById("map");
 const logoutBtn = document.querySelector(".nav__el--logout");
 const saveBtnPassword = document.querySelector(".btn--save-password");
 const saveBtnProfile = document.querySelector(".btn--save-profile");
+const uploadForm = document.querySelector(".form__upload");
 if (map) {
     const locations = JSON.parse(map.dataset.locations);
     (0, _mapbox.displayMap)(locations);
@@ -585,8 +586,13 @@ if (logoutBtn) logoutBtn.addEventListener("click", (0, _auth.logout));
 if (updateUserForm) updateUserForm.addEventListener("submit", async (e)=>{
     e.preventDefault();
     saveBtnProfile.textContent = "Updating ...";
+    const form = new FormData();
+    form.append("photo", uploadForm.files[0]);
     const data = {
-        name: usernameInput.value
+        name: usernameInput.value,
+        ...uploadForm.files[0] && {
+            form
+        }
     };
     await (0, _updateSettings.updateProfile)(data, "Profile");
     saveBtnProfile.textContent = "Save settings";
