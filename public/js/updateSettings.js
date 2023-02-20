@@ -16,6 +16,11 @@ export const updateProfile = async (inputData, type) => {
     const { data } = await axios({
       method: 'PATCH',
       url,
+      ...(type.toLowerCase() !== 'password' && {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }),
       data: { ...inputData },
     });
 

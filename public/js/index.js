@@ -39,16 +39,6 @@ if (updateUserForm)
 
     saveBtnProfile.textContent = 'Updating ...';
 
-    const form = new FormData()
-    form.append('photo', uploadForm.files[0])
-
-    // doesn't work
-    // const data = {
-    //   name: usernameInput.value,
-    //   ...(uploadForm.files[0] && { form }),
-    // };
-
-    // req.file is alwais undefined
     const data = {
       name: usernameInput.value,
       ...(uploadForm.files[0] && { photo: uploadForm.files[0] }),

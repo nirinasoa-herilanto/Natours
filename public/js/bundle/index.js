@@ -586,12 +586,10 @@ if (logoutBtn) logoutBtn.addEventListener("click", (0, _auth.logout));
 if (updateUserForm) updateUserForm.addEventListener("submit", async (e)=>{
     e.preventDefault();
     saveBtnProfile.textContent = "Updating ...";
-    const form = new FormData();
-    form.append("photo", uploadForm.files[0]);
     const data = {
         name: usernameInput.value,
         ...uploadForm.files[0] && {
-            form
+            photo: uploadForm.files[0]
         }
     };
     await (0, _updateSettings.updateProfile)(data, "Profile");
@@ -11843,6 +11841,11 @@ const updateProfile = async (inputData, type)=>{
         const { data  } = await (0, _axiosDefault.default)({
             method: "PATCH",
             url,
+            ...type.toLowerCase() !== "password" && {
+                headers: {
+                    "Content-Type": "multipart/form-data"
+                }
+            },
             data: {
                 ...inputData
             }
