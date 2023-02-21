@@ -43,19 +43,19 @@ exports.uploadPhoto = upload.single('photo'); // 'photo', name of the fields
 /**
  * image resizer
  */
-exports.resizeUserPhoto = (req, res, next) => {
+exports.resizeUserPhoto = catchAsync(async (req, res, next) => {
   if (!req.file) return next();
 
   req.file.filename = `user-${req.user.id}-${Date.now()}.jpeg`;
 
-  sharp(req.file.buffer)
+  await sharp(req.file.buffer)
     .resize({ width: 500, height: 500, fit: 'cover' })
     .toFormat('jpeg')
     .jpeg({ quality: 90 })
     .toFile(`public/img/users/${req.file.filename}`);
 
   next();
-};
+});
 
 /**
  * Use to filter data input (req.body)
