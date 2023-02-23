@@ -560,6 +560,7 @@ function hmrAccept(bundle, id) {
 var _polyfill = require("@babel/polyfill");
 var _auth = require("./auth");
 var _mapbox = require("./mapbox");
+var _stripe = require("./stripe");
 var _updateSettings = require("./updateSettings");
 const emailInput = document.getElementById("email");
 const passwordInput = document.getElementById("password");
@@ -569,6 +570,7 @@ const passwordConfirm = document.getElementById("password-confirm");
 const loginForm = document.querySelector(".form--login");
 const updateUserForm = document.querySelector(".form-user-data");
 const updatePasswordForm = document.querySelector(".form-user-password");
+const bookTourBtn = document.getElementById("book-tour");
 const map = document.getElementById("map");
 const logoutBtn = document.querySelector(".nav__el--logout");
 const saveBtnPassword = document.querySelector(".btn--save-password");
@@ -609,8 +611,13 @@ if (updatePasswordForm) updatePasswordForm.addEventListener("submit", async (e)=
     passwordConfirm.value = "";
     currentPasswordInput.value = "";
 });
+if (bookTourBtn) bookTourBtn.addEventListener("click", async (e)=>{
+    e.target.textContent = "Processing ...";
+    const { tourId  } = e.target.dataset;
+    await (0, _stripe.bookTour)(tourId);
+});
 
-},{"@babel/polyfill":"dTCHC","./mapbox":"3zDlz","./auth":"fov0Z","./updateSettings":"l3cGY"}],"dTCHC":[function(require,module,exports) {
+},{"@babel/polyfill":"dTCHC","./mapbox":"3zDlz","./auth":"fov0Z","./updateSettings":"l3cGY","./stripe":"10tSC"}],"dTCHC":[function(require,module,exports) {
 "use strict";
 require("2de3227252dba7fd");
 var _global = _interopRequireDefault(require("7cb32dda5933ab90"));
@@ -11853,6 +11860,26 @@ const updateProfile = async (inputData, type)=>{
         if (data.status === "success") (0, _alert.showAlert)("success", `${type.toUpperCase()} updated successfully :)`);
     } catch (error) {
         (0, _alert.showAlert)("error", error.response.data.message);
+    }
+};
+
+},{"axios":"jo6P5","./alert":"kxdiQ","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"10tSC":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "bookTour", ()=>bookTour);
+var _axios = require("axios");
+var _axiosDefault = parcelHelpers.interopDefault(_axios);
+var _alert = require("./alert");
+const bookTour = async (tourId)=>{
+    try {
+        const { data  } = await (0, _axiosDefault.default)({
+            method: "GET",
+            url: `http://127.0.0.1:8000/api/v1/bookings/checkout-session/${tourId}`
+        });
+        console.log(data);
+        if (data.status === "success") location.assign(data.session.url);
+    } catch (error) {
+        (0, _alert.showAlert)("error", "Something went wrong during checkouts!");
     }
 };
 
