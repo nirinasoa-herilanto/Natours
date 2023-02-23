@@ -13,6 +13,7 @@ const tourRouter = require('./routes/tour.routes');
 const userRouter = require('./routes/user.routes');
 const reviewRouter = require('./routes/review.routes');
 const viewRouter = require('./routes/view.routes');
+const bookingRouter = require('./routes/booking.routes');
 
 const AppError = require('./utils/appError.utils');
 const globalErrorHandler = require('./controllers/error.controller');
@@ -40,6 +41,7 @@ app.use(
           "'self'",
           'https://api.mapbox.com',
           'https://cdnjs.cloudflare.com',
+          'https://js.stripe.com/',
           "'unsafe-inline'",
         ],
         'connect-src': [
@@ -51,6 +53,7 @@ app.use(
           'https://*.tiles.mapbox.com',
           'https://api.mapbox.com',
           'https://events.mapbox.com',
+          'https://js.stripe.com/',
         ],
       },
     },
@@ -101,6 +104,7 @@ app.use('/', viewRouter);
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/reviews', reviewRouter);
+app.use('/api/v1/bookings', bookingRouter);
 
 // # Handling unhandled routes
 app.all('*', (req, res, next) => {

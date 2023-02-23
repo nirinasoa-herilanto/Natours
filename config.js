@@ -11,4 +11,5 @@ module.exports = {
   emailPort: process.env.EMAIL_PORT,
   emailFrom: process.env.EMAIL_FROM,
   sendingBlueApiKey: process.env.SENDINGBLUE_APIKEY,
+  stripeApiKey: process.env.STRIPE_API_KEY,
 };
