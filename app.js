@@ -24,6 +24,8 @@ const globalErrorHandler = require('./controllers/error.controller');
  */
 const app = express();
 
+app.enable('trust proxy');
+
 app.use(cors());
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
@@ -104,6 +106,12 @@ app.use((req, res, next) => {
 });
 
 // ----- Routes -----
+/**
+ * pref-light phased, allow all patch & delete request on complex endpoint
+ * -  app.options('api/v1/tours/:id', cors()); only patch & delete can be done on this complex endpoint
+ * */
+app.options('*', cors());
+
 app.use('/', viewRouter);
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);

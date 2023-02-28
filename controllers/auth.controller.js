@@ -14,7 +14,7 @@ const Email = require('../utils/email.util');
  * @param {number} statusCode  status code
  * @param {User} user User response
  */
-const createAuthResponse = (res, statusCode, user) => {
+const createAuthResponse = (req, res, statusCode, user) => {
   const token = generateJWTToken(user._id);
 
   const cookieOptions = {
@@ -22,7 +22,8 @@ const createAuthResponse = (res, statusCode, user) => {
     httpOnly: true,
   };
 
-  if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
+  if (req.secure || req.headers['x-forwarded-proto'] === 'https')
+    cookieOptions.secure = true;
 
   res.cookie('jwt', token, cookieOptions);
 
@@ -49,7 +50,7 @@ exports.signup = catchAsync(async (req, res, next) => {
 
   await new Email(user, url).sendWelcome();
 
-  createAuthResponse(res, 201, user);
+  createAuthResponse(req, res, 201, user);
 });
 
 exports.login = catchAsync(async (req, res, next) => {
@@ -65,7 +66,7 @@ exports.login = catchAsync(async (req, res, next) => {
     return next(new AppError('Incorrect email or password!', 401));
   }
 
-  createAuthResponse(res, 200, user);
+  createAuthResponse(req, res, 200, user);
 });
 
 exports.logout = (req, res) => {
@@ -235,7 +236,7 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
   await user.save();
 
   // 3- log the user in, send JWT(accessToken)
-  createAuthResponse(res, 200, user);
+  createAuthResponse(req, res, 200, user);
 });
 
 /**
@@ -257,5 +258,5 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   await user.save();
 
   // Send access token
-  createAuthResponse(res, 200, user);
+  createAuthResponse(req, res, 200, user);
 });
