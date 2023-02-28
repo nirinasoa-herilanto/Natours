@@ -11876,7 +11876,6 @@ const bookTour = async (tourId)=>{
             method: "GET",
             url: `http://127.0.0.1:8000/api/v1/bookings/checkout-session/${tourId}`
         });
-        console.log(data);
         if (data.status === "success") location.assign(data.session.url);
     } catch (error) {
         (0, _alert.showAlert)("error", "Something went wrong during checkouts!");
