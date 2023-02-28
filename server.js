@@ -11,13 +11,13 @@ process.on('uncaughtException', (err) => {
 
 dotenv.config({ path: './config.env' });
 const app = require('./app');
-const { port, dbLocal } = require('./config');
+const { port, dbUrl } = require('./config');
 
 mongoose.set('strictQuery', true);
-mongoose.connect(dbLocal).then(() => console.log('DB Connected'));
+mongoose.connect(dbUrl).then(() => console.log('DB Connected'));
 
 const server = app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
+  console.log(`Server is running on http://127.0.0.1:${port}`);
 });
 
 // Use to catch bugs on async code
