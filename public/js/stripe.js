@@ -5,7 +5,7 @@ export const bookTour = async (tourId) => {
   try {
     const { data } = await axios({
       method: 'GET',
-      url: `http://127.0.0.1:8000/api/v1/bookings/checkout-session/${tourId}`,
+      url: `/api/v1/bookings/checkout-session/${tourId}`,
     });
 
     if (data.status === 'success') location.assign(data.session.url);

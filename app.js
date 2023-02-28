@@ -8,6 +8,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const mongoSanitize = require('express-mongo-sanitize');
 const rateLimit = require('express-rate-limit');
+const compression = require('compression');
 
 const tourRouter = require('./routes/tour.routes');
 const userRouter = require('./routes/user.routes');
@@ -93,6 +94,9 @@ app.use(
     ],
   })
 );
+
+// compress all text response
+app.use(compression());
 
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();

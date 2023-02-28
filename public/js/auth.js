@@ -5,7 +5,7 @@ export const login = async (email, password) => {
   try {
     const { data } = await axios({
       method: 'POST',
-      url: 'http://127.0.0.1:8000/api/v1/users/login',
+      url: '/api/v1/users/login',
       data: { email, password },
     });
 
@@ -24,12 +24,12 @@ export const logout = async () => {
   try {
     const { data } = await axios({
       method: 'GET',
-      url: 'http://127.0.0.1:8000/api/v1/users/logout',
+      url: '/api/v1/users/logout',
     });
 
     if (data.status === 'success') location.reload();
   } catch (error) {
-    console.log(error.response);
+    // console.log(error.response);
     showAlert('error', 'Error loggin out. Try again!');
   }
 };
