@@ -8,10 +8,11 @@
   },
   "scripts": {
     "start:prod": "cross-env NODE_ENV=production nodemon server.js",
-    "start": "nodemon server.js",
     "debug": "ndb server.js",
     "watch:js": "parcel watch ./public/js/index.js --dist-dir ./public/js/bundle",
-    "build:js": "parcel build ./public/js/index.js --dist-dir ./public/js/bundle"
+    "build:js": "parcel build ./public/js/index.js --dist-dir ./public/js/bundle",
+    "dev": "nodemon server.js",
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "Nirinasoa Herilanto",
@@ -49,5 +50,8 @@
   "devDependencies": {
     "ndb": "^1.1.5",
     "parcel": "^2.8.3"
+  },
+  "engines": {
+    "node": ">=16.16.0"
   }
 }
