@@ -1,5 +1,6 @@
-import '@babel/polyfill';
-import { login, logout } from './auth';
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
+import { authHandler, logout } from './auth';
 import { displayMap } from './mapbox';
 import { bookTour } from './stripe';
 import { updateProfile } from './updateSettings';
@@ -11,6 +12,7 @@ const currentPasswordInput = document.getElementById('password-current');
 const passwordConfirm = document.getElementById('password-confirm');
 
 const loginForm = document.querySelector('.form--login');
+const signupForm = document.querySelector('.form--signup');
 const updateUserForm = document.querySelector('.form-user-data');
 const updatePasswordForm = document.querySelector('.form-user-password');
 const bookTourBtn = document.getElementById('book-tour');
@@ -30,7 +32,23 @@ if (loginForm)
   loginForm.addEventListener('submit', (e) => {
     e.preventDefault();
 
-    login(emailInput.value, passwordInput.value);
+    const data = { email: emailInput.value, password: passwordInput.value };
+
+    authHandler(data, 'login');
+  });
+
+if (signupForm)
+  signupForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const data = {
+      name: usernameInput.value,
+      email: emailInput.value,
+      password: passwordInput.value,
+      passwordConfirm: passwordConfirm.value,
+    };
+
+    authHandler(data, 'signup');
   });
 
 if (logoutBtn) logoutBtn.addEventListener('click', logout);

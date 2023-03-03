@@ -10,6 +10,12 @@ exports.displayUserLogin = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.displayUserSignup = catchAsync(async (req, res, next) => {
+  res.status(200).render('signup', {
+    title: 'Sign up to Natours',
+  });
+});
+
 exports.displayOveview = catchAsync(async (req, res, next) => {
   const tours = await Tour.find().exec();
 

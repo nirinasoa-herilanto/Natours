@@ -7,11 +7,13 @@ const {
   displayUserLogin,
   displayProfile,
   viewMyTours,
+  displayUserSignup,
 } = require('../controllers/view.controller');
 
 const router = express.Router();
 
 router.get('/login', isLoggedIn, displayUserLogin);
+router.get('/signup', isLoggedIn, displayUserSignup);
 router.get('/', createBookingCheckout, isLoggedIn, displayOveview);
 router.get('/tours/:slug', isLoggedIn, displayTourDetail);
 

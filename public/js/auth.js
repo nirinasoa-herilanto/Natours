@@ -1,16 +1,31 @@
 import axios from 'axios';
 import { showAlert } from './alert';
 
-export const login = async (email, password) => {
+/**
+ * Use to handle log in/ signup action by user
+ * @param {Object} inputData data needed on action handler
+ * @param {string} type login | signup
+ */
+export const authHandler = async (inputData, type) => {
   try {
+    const url =
+      type === 'login' ? '/api/v1/users/login' : '/api/v1/users/signup';
+
     const { data } = await axios({
       method: 'POST',
-      url: '/api/v1/users/login',
-      data: { email, password },
+      url,
+      data: { ...inputData },
     });
 
     if (data.status === 'success') {
-      showAlert('success', 'You are logged in successfully :)');
+      showAlert(
+        'success',
+        `${
+          type !== 'login'
+            ? 'Welcome to Natours :)'
+            : ' You are logged in successfully :)'
+        }`
+      );
       window.setTimeout(() => {
         location.assign('/');
       }, 1500);
