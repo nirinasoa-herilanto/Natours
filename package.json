@@ -18,11 +18,11 @@
   "author": "Nirinasoa Herilanto",
   "license": "ISC",
   "dependencies": {
-    "@babel/polyfill": "^7.12.1",
     "axios": "^1.3.3",
     "bcryptjs": "^2.4.3",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.6",
+    "core-js": "^3.29.0",
     "cors": "^2.8.5",
     "cross-env": "^7.0.3",
     "dotenv": "^16.0.3",
@@ -41,6 +41,7 @@
     "nodemailer-sendinblue-transport": "^2.0.1",
     "nodemon": "^2.0.20",
     "pug": "^3.0.2",
+    "regenerator-runtime": "^0.13.11",
     "sharp": "^0.31.3",
     "slugify": "^1.6.5",
     "stripe": "^11.11.0",
@@ -49,9 +50,7 @@
   },
   "devDependencies": {
     "ndb": "^1.1.5",
-    "parcel": "^2.8.3"
-  },
-  "engines": {
-    "node": ">=16.16.0"
+    "parcel": "^2.8.3",
+    "process": "^0.11.10"
   }
 }
