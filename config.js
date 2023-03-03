@@ -12,4 +12,5 @@ module.exports = {
   emailFrom: process.env.EMAIL_FROM,
   sendingBlueApiKey: process.env.SENDINGBLUE_APIKEY,
   stripeApiKey: process.env.STRIPE_API_KEY,
+  stripeWebhookSecret: process.env.STRIPE_WEBHOOK_SECRET,
 };

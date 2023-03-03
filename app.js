@@ -18,6 +18,7 @@ const bookingRouter = require('./routes/booking.routes');
 
 const AppError = require('./utils/appError.utils');
 const globalErrorHandler = require('./controllers/error.controller');
+const { webHookCheckout } = require('./controllers/booking.controller');
 
 /**
  * Natours application
@@ -76,6 +77,13 @@ const limiter = rateLimit({
 });
 
 app.use('/api', limiter);
+
+// (only for production) Stripe will call it automatically when checkout is created
+app.post(
+  '/webhook-checkout',
+  express.raw({ type: 'application/json' }),
+  webHookCheckout
+);
 
 app.use(express.json({ limit: '1mb' })); // body parser, reading data from req.body
 app.use(cookieParser());

@@ -12,12 +12,13 @@ const {
 
 const router = express.Router();
 
+router.get('/', isLoggedIn, displayOveview);
 router.get('/login', isLoggedIn, displayUserLogin);
 router.get('/signup', isLoggedIn, displayUserSignup);
-router.get('/', createBookingCheckout, isLoggedIn, displayOveview);
 router.get('/tours/:slug', isLoggedIn, displayTourDetail);
 
 router.get('/profile', protect, displayProfile);
-router.get('/my-tours', protect, viewMyTours);
+// "createBookingCheckout" disable/delete it, if you have an access in Stripe
+router.get('/my-tours', createBookingCheckout, protect, viewMyTours);
 
 module.exports = router;
