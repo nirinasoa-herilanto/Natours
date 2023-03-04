@@ -2881,7 +2881,9 @@ Use to delete review. Only the user who posted this review perform the action or
 No content with status code 204
 ```
 
-# Deployement N/A
+# Deployement
+
+Natours application is available on this [link](https://natours-nhr.onrender.com/)
 
 # Author
 
