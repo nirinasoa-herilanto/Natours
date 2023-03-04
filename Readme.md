@@ -10,7 +10,7 @@ Actually, you can run the app locally by following this steps. After cloning thi
 
 ```
 npm install
-npm start // development mode
+npm run dev // development mode
 ```
 
 ## Import/Delete dummy data
@@ -33,6 +33,51 @@ node dev-data/data/import-dev-data.js --import
 
 ```
 node dev-data/data/import-dev-data.js --delete
+```
+
+## Handling payments
+
+Natours app use `Stripe` for handling payments. You can create your account on Stripe and provide all information that the apps requires.
+
+We can add on your env file:
+
+```
+STRIPE_API_KEY=sk_test_VePHdqKTYQjKNInc7u56JBrQ // Public Stripe API key
+STRIPE_WEBHOOK_SECRET=
+```
+
+NB: During the development of this app, my country is not available also on Stripe and in order to test some functionnality with that, I use the public API key.
+
+If you want to test the payment, please do not provide your secure information. So, we can use the following credit card that's available on the [stripe docs](https://stripe.com/docs/testing#use-test-cards).
+
+```
+credit card: 4242 4242 4242 4242 // VISA
+m/y: 12/34
+cvv: 567
+```
+
+## Environment variables
+
+```
+NODE_ENV=development
+PORT=8000
+DATABASE= // database on mongo Atlas
+DATABASE_LOCAL=mongodb://127.0.0.1:27017/natours
+
+JWT_SECRET=
+JWT_EXPIRES_IN=
+JWT_COOKIE_EXPIRES=
+
+// Mailtrap config
+EMAIL_USERNAME=
+EMAIL_PASSWORD=
+EMAIL_HOST=
+EMAIL_PORT=
+EMAIL_FROM=
+
+SENDINGBLUE_APIKEY= // Sending Blue mail service
+STRIPE_API_KEY=sk_test_VePHdqKTYQjKNInc7u56JBrQ // Public Stripe API key
+STRIPE_WEBHOOK_SECRET= // webhooks
 ```
 
 # API reference
