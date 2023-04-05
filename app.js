@@ -138,14 +138,4 @@ app.all('*', (req, res, next) => {
 // # Error handling (globally), catch all errors on the server.
 app.use(globalErrorHandler);
 
-// # Handling unhandled routes
-app.all('*', (req, res, next) => {
-  const err = new AppError(`Can't find ${req.originalUrl} on the server.`, 404);
-
-  next(err);
-});
-
-// # Error handling (globally), catch all errors on the server.
-app.use(globalErrorHandler);
-
 module.exports = app;
