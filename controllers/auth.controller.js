@@ -69,39 +69,6 @@ exports.login = catchAsync(async (req, res, next) => {
   createAuthResponse(req, res, 200, user);
 });
 
-exports.logout = (req, res) => {
-  res.clearCookie('jwt');
-
-  res.status(200).json({ status: 'success' });
-};
-
-/**
- * use to log out
- */
-exports.logout = (req, res) => {
-  res.clearCookie('jwt');
-
-  res.status(200).json({ status: 'success' });
-};
-
-/**
- * use to log out
- */
-exports.logout = (req, res) => {
-  res.clearCookie('jwt');
-
-  res.status(200).json({ status: 'success' });
-};
-
-/**
- * use to log out
- */
-exports.logout = (req, res) => {
-  res.clearCookie('jwt');
-
-  res.status(200).json({ status: 'success' });
-};
-
 /**
  * use to log out
  */
